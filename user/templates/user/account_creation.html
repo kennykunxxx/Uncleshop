@@ -1,0 +1,15 @@
+{% extends 'home/base.html' %}
+
+{% block title %}
+Account Creation
+{% endblock %}
+
+{% block content %}
+
+<form action='.' method='post'>
+    {% csrf_token %}
+    {{forms.as_p}}
+    <input type="submit" value="Submit"/>
+</form>
+
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'home/base.html' %}
+
+{% block title %}
+Cart
+{% endblock %}
+
+
+{% block content %}
+<div class='flex-box'>
+    <div class='flex-box column table-width'>
+        <div>
+        {% with total_items=cart|length %}
+            {% if cart|length > 0 %}
+                
+                    <table>
+                        <thead>
+                            <tr class='table-head'>
+                                <th class='column1'>Item</th>
+                                <th class='column5'></th>
+                                <th class='column2'>Quantity</th>
+                                <th class='column3'>Individual Price</th>
+                                <th class='column4'>Total Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                    {% for items in cart %}
+                        <tr>
+                            <td class='column1'>
+                            <img src='{{items.product.product_image.url}}'
+                            style="width: 130px;"/>
+                            </td>
+                            <td>{{items.product}}</td>
+                            <td class='column2'>{{items.quantity}}</td>
+                            <td class='column3'>${{items.price}}</td>
+                            <td class='column4'>${{items.total_price}}</td>
+                        </tr>
+                    {% endfor %}
+                         </tbody>
+                    </table>
+            {% else %}
+                <h1>There is nothing here</h1>
+            {% endif %}
+        {% endwith %}
+        </div>
+        <div>
+        </div>
+    </div>
+    <div class='grid table-width2 table-margin basket-total'>
+        <div class='grid grid-basket-total'>
+            <div>
+                Total Item(s)
+            </div>
+            <div class='grid-text'>
+                {% with total_items=cart|length %}
+                {% if cart|length > 0 %}
+                    {{total_items}}
+                {% endif %}
+                {% endwith %}
+            </div>
+            <div>
+                <div>
+                    Total Cost of items
+                </div>
+            </div>
+            <div class='grid-text'>
+                £{{cart.get_total_price}}
+            </div>
+        </div>
+        <div>
+            <form action='{% url "orders:checkout" %}'>
+                <input type="submit" value="Checkout"/>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

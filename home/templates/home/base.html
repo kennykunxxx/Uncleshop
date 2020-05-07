@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            
+            {% block title %}
+            {% endblock %}
+        </title>
+        <link rel='stylesheet' type='text/css' href='{% static "css/main.css" %}'>
+        <link href='https://fonts.googleapis.com/css?family=Alex Brush' rel='stylesheet'>
+        {% block bootstrap %}
+        {% endblock %}
+    </head>
+    
+    <body class='body-detail'>
+        <header class='header'>
+            <nav class='nav-bar'>
+                <div class='nav-bars'>
+                <ul class='nav-top'>
+                    <li><a href='{% url "store:product_list" %}'>Store</a></li>
+                    <li><a href='{% url "orders:cart" %}'> Shopping Cart</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href='{% url "user:logout" %}'> Logout </a></li>
+                    {% else %}
+                    <li><a href='{% url "user:login" %}'> Login </a></li>
+                    <li><a href='{% url "user:account_creation" %}'>Create Account</a></li>
+                    {% endif %}
+                </ul>
+                </div>
+            </nav>
+        </header>
+        <div class='container'>
+        {% block content %}
+        {% endblock %}
+        </div>
+        {% block bsjs %}
+        {% endblock %}
+    </body>
+</html>

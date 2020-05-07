@@ -1,0 +1,98 @@
+{% extends 'home/base.html' %}
+
+{% block title %}
+{{product.name}}
+{% endblock %}
+
+{% block content %}
+<div class="product-detail-box">
+    <div class='product-flex'>
+        <div class='product-grid-detail'>
+    
+            <div class='product-image'>
+                <img src="{{product.product_image.url}}">
+            </div>
+            <div class='product-title'>
+                <p>{{product.product_name}}</p>
+            </div>
+            <div class='product-information'>
+                <p>{{product.product_description}}</p>
+                {% if recipe %}
+                <p>Recipe to be finished</p>
+                {% endif %}
+            </div>
+            <div class='product-orders'>
+                <p>${{product.product_price}}</p> 
+                <form action='{% url "orders:add" product.id %}' method='post'>
+                    {% csrf_token %}
+                    {{quantity_form}} of {{product.product_quantity}}
+                    <input type="submit" value="Submit"/>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="product-under column">
+        <div class='similar-products column'>
+            {% if similar_products %}
+            <div class='flex-box'>
+                <p> See Similar Products </p>
+            </div>
+            <div class='flex-box'>
+                {% for product in similar_products %}
+                <div class='similar-products-grid'>
+                    <img src="{{product.product_image.url}}" style='with:150px; height:150px'>
+                    <p>{{product.product_name}}</p>
+                    <p>${{product.product_price}}</p>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>    
+        </div>
+        <div class='flex-box column'>
+            {% for q in qa %}
+            <p><b>Question</b></p>
+            <p class='small'>User: {{q.user}}</p>
+            <p class='small'>Question: {{q.question}}</p>
+            {% if q.answer %}
+            <p class="small"><b>Answer</b></p>
+            <p>             {{q.staff_user}}         </p>
+                            {{q.answer }}
+            {% else %}
+            <p>
+                
+                    {% if request.user.is_staff %}
+                    <p><b>Staff Answer here</b></p>
+                    <form action='{% url "store:staff_answer" q.id %}' method='post'>
+                        {% csrf_token %}
+                        <p>
+                            {{ answer_form }}
+                        </p>
+                        <input type='submit' value='submit'>
+                    </form>
+            </p>
+            {% endif %}
+            {% endif %}
+            {% empty %}
+            <p>There are no questions yet</p>
+            {% endfor %}
+            
+            {% if user.is_authenticated %}
+            {% if user.is_staff %}
+            {% else %}
+            <p><b> Questions and Answers</b></p>
+            <form action='{% url "store:product_detail" product.id %}' method='POST'>
+                {% csrf_token %}
+                {{question_form.as_p}}
+                <input type='submit' value='submit'>
+            </form>
+            {% endif %}
+            {% else %}
+            <p>Please <a href="{% url "user:login" %}?next={{request.path}}">Login</a> to submit a question
+            </p>
+            {% endif %}
+        </div>
+        
+
+    </div>
+</div>
+{% endblock %}

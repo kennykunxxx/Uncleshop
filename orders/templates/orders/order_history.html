@@ -1,0 +1,26 @@
+{% extends 'home/base.html' %}
+
+{% block title %}
+Order History
+{% endblock %}
+
+{% block content %}
+<p>
+    <table style="100%">
+        <tr>
+            <th>Order Number</th>
+            <th>Date</th>
+            <th>Total Cost</th>
+        </tr>
+    {% for order in order_history %}
+        <tr>
+            <td><a href='{% url "orders:order_history_detail" order.id %}'>
+                {{order.id}}
+                </a></td>
+            <td>{{order.create}}</td>
+            <td>{{order.total_price}}</td>
+        </tr>
+    {% endfor %}
+    </table>
+</p>
+{% endblock %}

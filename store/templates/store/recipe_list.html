@@ -1,0 +1,36 @@
+{% extends 'home/base.html' %}
+
+{% block title %}
+Product List
+{% endblock %}
+
+{% block content %}
+
+<ul>
+    <li>
+        <a href='{% url "store:recipe_list" %}'>All</a>
+    </li>
+    {% for c in categories %}
+    <li>
+        <a href='{{c.get_absolute_url_recipe }}'>{{c.name}}</a>
+
+    </li>
+    {% endfor %}
+</ul>
+
+
+{% for r in recipe %}
+<img src='{{r.product.product_image.url}}' style='with:100px; height:100px' />
+<p><a href={{r.product.get_absolute_url}}>{{r.product.product_name}}</a></p>
+<p>{{r.title}}</p>
+
+
+
+
+{% empty %}
+<h3>
+    No Recipe Here
+</h3>
+{% endfor %} 
+
+{% endblock %}

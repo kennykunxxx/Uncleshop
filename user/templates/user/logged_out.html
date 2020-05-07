@@ -1,0 +1,13 @@
+{% extends "home/base.html" %}
+
+{% block title %}
+Logged out
+{% endblock %}
+
+
+{% block content %}
+<div class='flex column'>
+<h1>You are now logged out </h1>
+<p> To login again click  <a href="{% url "user:login" %}">here</a>.</p>
+</div>
+{% endblock %}

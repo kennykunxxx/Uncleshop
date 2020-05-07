@@ -1,0 +1,26 @@
+{% extends 'home/base.html' %}
+
+{% block title %}
+About
+{% endblock %}
+
+{% block content %}
+
+<p>
+    <h1> Description Title</h1>
+    <h3> Description Text </h3>
+    
+</p>
+
+<p>
+    {% for member in team %}
+    <img src="{{member.profile_image.url}}" style='width:45px; height:45px'/>
+    {{member.name}}
+    {{member.role}}
+    {{member.bio}}
+    {% empty %}
+    There is nothing here
+    {% endfor %}
+</p>
+
+{% endblock %}
