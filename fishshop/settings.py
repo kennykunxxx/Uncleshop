@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '1l2wvda4^-l(!hyyt9hiu6rqo(m@s6@xa4o3@5ne#lj3v7o@*#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['142.93.33.223', '127.0.0.1']
 
 
 # Application definition
@@ -142,13 +142,9 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
-if DEBUG:
-    STATIC_ROOT = '/home/kenny/Desktop/uncleshop/Uncleshop'
-else:
-    STATIC_ROOT = 'home/kenny/uncleshop'
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/') 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, 'static_in_env')
 ]
 
 
