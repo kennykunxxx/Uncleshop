@@ -25,7 +25,7 @@ SECRET_KEY = '1l2wvda4^-l(!hyyt9hiu6rqo(m@s6@xa4o3@5ne#lj3v7o@*#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['142.93.33.223']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,25 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_crontab',
     'store.apps.StoreConfig',
     'orders.apps.OrdersConfig',
     'home.apps.HomeConfig',
     'user.apps.UserConfig',
-    'wagtail.contrib.forms',
-    'wagtail.contrib.redirects',
-    'wagtail.embeds',
-    'wagtail.sites',
-    'wagtail.users',
-    'wagtail.snippets',
-    'wagtail.documents',
-    'wagtail.images',
-    'wagtail.search',
-    'wagtail.admin',
-    'wagtail.core',
-    
-    'modelcluster',
-    'taggit',
     'ckeditor',
 ]
 
@@ -67,8 +52,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'wagtail.core.middleware.SiteMiddleware',
-    'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 ]
 
 ROOT_URLCONF = 'fishshop.urls'
@@ -96,16 +79,24 @@ WSGI_APPLICATION = 'fishshop.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
+if DEBUG:
+   DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'uncleshop',
-        'USER': 'kenny',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
-        'PORT': '',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
+else: 
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'uncleshop',
+            'USER': 'kenny',
+            'PASSWORD': 'password',
+            'HOST': 'localhost',
+            'PORT': '',
+        }
+    }
 
 
 # Password validation
@@ -165,9 +156,9 @@ LOGIN_URL = 'user:login'
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
 
-WAGTAIL_SITE_NAME = 'Uncle Fish Shop'
 
 
+"""
 #Celery
 CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
@@ -176,7 +167,6 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
 
 
-"""
 CRONJOBS = [
     ('*/1 * * * *', 'orders.cron.my_scheduled_job', ['request'])
 ]
