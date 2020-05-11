@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '1l2wvda4^-l(!hyyt9hiu6rqo(m@s6@xa4o3@5ne#lj3v7o@*#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['142.93.33.223', '127.0.0.1']
 
@@ -41,7 +41,11 @@ INSTALLED_APPS = [
     'orders.apps.OrdersConfig',
     'home.apps.HomeConfig',
     'user.apps.UserConfig',
+    'glass',
+
     'ckeditor',
+    'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -74,6 +78,15 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'fishshop.wsgi.application'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES':(
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
 
 
 # Database
@@ -142,9 +155,9 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static') 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/') 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static_in_env')
+    os.path.join(BASE_DIR, 'static_in_env/')
 ]
 
 

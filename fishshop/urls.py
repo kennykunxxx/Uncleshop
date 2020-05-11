@@ -15,8 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from .router import router
+from rest_framework.authtoken import views
+
 from django.conf import settings
 from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,7 +28,8 @@ urlpatterns = [
     path('user/', include('user.urls', namespace='user')),
     path('orders/', include('orders.urls', namespace='orders')),
     path('home/', include('home.urls', namespace='home')),
-    
+    path('api/', include(router.urls)),
+    path('api-token-auth/', views.obtain_auth_token, name='api-token-auth'),
     
 ]
 
