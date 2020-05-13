@@ -30,7 +30,7 @@ urlpatterns = [
     path('home/', include('home.urls', namespace='home')),
     path('api/', include(router.urls)),
     path('api-token-auth/', views.obtain_auth_token, name='api-token-auth'),
-    
+    path('chat/', include('chat.urls')),
 ]
 
 if settings.DEBUG:

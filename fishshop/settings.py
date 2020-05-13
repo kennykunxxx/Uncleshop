@@ -25,7 +25,7 @@ SECRET_KEY = '1l2wvda4^-l(!hyyt9hiu6rqo(m@s6@xa4o3@5ne#lj3v7o@*#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['142.93.33.223', '127.0.0.1']
+ALLOWED_HOSTS = ['142.93.33.223', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'home.apps.HomeConfig',
     'user.apps.UserConfig',
     'glass',
+    'chat',
 
+    'channels',
     'ckeditor',
     'rest_framework',
     'rest_framework.authtoken',
@@ -78,6 +80,16 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'fishshop.wsgi.application'
+ASGI_APPLICATION = 'fishshop.routing.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
